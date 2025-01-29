@@ -189,16 +189,14 @@ namespace GHelper
             comboPowerMode.DisplayMember = "Value";
             comboPowerMode.ValueMember = "Key";
 
-            if (AppConfig.IsAlly())
-            {
-                sliderEPP.Value = PowerNative.GetEPP();
-                sliderEPP.Minimum = 0;
-                sliderEPP.Maximum = 100;
-                sliderEPP.Value = AppConfig.GetMode("epp_value", 0); // Default value is 0 if not set
-                sliderEPP.Scroll += SliderEPP_Scroll;
-                labelEPP.Text = $"EPP";
-                labelEPPSliderRight.Text = $"{sliderEPP.Value}%";
-            }
+            sliderCpuMax.Maximum = 100;
+            sliderCpuMax.Minimum = PowerNative.GetCpuMin();
+            sliderCpuMax.Value = PowerNative.GetCpuMax();
+            sliderCpuMax.Value = AppConfig.GetMode("cpu_max_value", 100); // Default value is 0 if not set
+            sliderCpuMax.Scroll += SliderCpuMax_Scroll;
+            labelCpuMax.Text = $"Max processor state";
+            labelCpuMaxSliderRight.Text = $"{sliderCpuMax.Value}%";
+
 
             FillModes();
             InitAll();
@@ -1382,11 +1380,11 @@ namespace GHelper
             }
         }
 
-        private void SliderEPP_Scroll(object? sender, EventArgs e)
+        private void SliderCpuMax_Scroll(object? sender, EventArgs e)
         {
-            AppConfig.SetMode("epp_value", sliderEPP.Value);
-            labelEPPSliderRight.Text = $"{sliderEPP.Value}%";
-            AppConfig.SetEPP(sliderEPP.Value);
+            AppConfig.SetMode("cpu_max_value", sliderCpuMax.Value);
+            labelCpuMaxSliderRight.Text = $"{sliderCpuMax.Value}%";
+            AppConfig.SetCpuMax(sliderCpuMax.Value);
         }
 
     }

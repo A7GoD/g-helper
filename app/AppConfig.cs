@@ -723,9 +723,9 @@ public static class AppConfig
         return Is("auto_status_led");
     }
 
-    public static void SetEPP(int value)
+    public static void SetCpuMax(int value)
     {
-        PowerNative.SetEPP(value);
+        PowerNative.SetCpuMax(value);
     }
 
 }
